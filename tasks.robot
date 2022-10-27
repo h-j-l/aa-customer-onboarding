@@ -9,10 +9,10 @@ Library             RPA.Tables
 
 *** Variables ***
 ${BUTTON_DOWNLOADCSV}       css:div > p > a[class="btn btn-orange"]
-${CSV_FILE}                 MissingCustomers.csv
+${CSV_FILE}                 ${OUTPUT_DIR}${/}MissingCustomers.csv
+${SCORE_FILE}               ${OUTPUT_DIR}${/}score.txt
 ${URL}
 ...                         https://developer.automationanywhere.com/challenges/automationanywherelabs-customeronboarding.html
-${SCORE_FILE}               ${OUTPUT_DIR}${/}score.txt
 
 
 *** Tasks ***
@@ -32,10 +32,10 @@ Open the challenge page
 Download the csv file
     Wait Until Page Contains Element    ${BUTTON_DOWNLOADCSV}
     ${url_csv}=    Get Element Attribute    ${BUTTON_DOWNLOADCSV}    attribute=href
-    Download    url=${url_csv}    target_file=${OUTPUT_DIR}${/}${CSV_FILE}    overwrite=True
+    Download    url=${url_csv}    target_file=${CSV_FILE}    overwrite=True
 
 Input data
-    ${customers}=    Read table from CSV    ${OUTPUT_DIR}${/}${CSV_FILE}
+    ${customers}=    Read table from CSV    ${CSV_FILE}
     # The page is reloaded to reset the timer.
     Reload Page
     Wait Until Page Contains Element    id:submit_button
